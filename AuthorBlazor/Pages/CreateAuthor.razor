@@ -1,0 +1,53 @@
+﻿@page "/CreateAuthor"
+
+@using WebApplication1.Models
+@using System.Text.Json
+@using System.Text
+
+@inject NavigationManager NavigationManager
+
+<h3>CreateAuthor</h3>
+
+<input type="text" placeholder="First name" @bind-value="FirstName"/>
+<input type="text" placeholder="Last name" @bind-value="LastName"/>
+<button @onclick="AddAuthor">Submit</button>
+@Label
+
+@code {
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    private string Label { get; set; }
+    private readonly string uri = "http://localhost:5000";
+
+    public async Task<bool> AddAuthor()
+    {
+        if (string.IsNullOrEmpty(FirstName) || string.IsNullOrEmpty(LastName))
+        {
+            Label = "Enter valid first and last name";
+        }
+        else
+        {
+            using HttpClient client = new HttpClient();
+            Author author = new Author();
+            author.FirstName = FirstName;
+            author.LastName = LastName;
+            
+
+                string authorAsJson = JsonSerializer.Serialize(author);
+                HttpContent content = new StringContent(authorAsJson, Encoding.UTF8, "application/json");
+                
+            HttpResponseMessage responseMessage = await client.PostAsync(
+                $"{uri}/Author" , content);
+            
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                throw new Exception("Kunne ikke tilføje forfatter");
+            }
+
+            return responseMessage.IsSuccessStatusCode;
+        }
+
+        return false;
+    }
+
+}
