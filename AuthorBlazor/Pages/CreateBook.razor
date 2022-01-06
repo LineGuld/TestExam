@@ -1,0 +1,86 @@
+﻿@page "/CreateBook"
+@using WebApplication1.Models
+@using Microsoft.AspNetCore.Components
+@using System.Text.Json
+
+@inject NavigationManager _navigationManager
+
+<h3>CreateBook</h3>
+<div class="container">
+<EditForm Model="newBook" OnValidSubmit="@AddBook">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    @if (_authors is null)
+    {
+        <div>loading ... </div>
+    }
+    else
+    {
+        <div class="form-group">
+            <label for="author">Select Author</label>
+            <select @bind="AuthorId" class="form-control" id="author">
+                @foreach (var author in _authors)
+                {
+                    <option value="@author.Id">
+                        @author.FirstName @author.LastName
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="form-group row">
+            <InputText @bind-Value="newBook.Title" class="form-control" type="text" placeholder="Title" />
+            <InputText @bind-Value="newBook.Genre" class="form-control" type="text" placeholder="Genre" />
+        </div>
+        <div class="form-group row">
+            ISBN
+            <InputNumber @bind-Value="newBook.ISBN" class="form-control" type="text" placeholder="ISBN"/>
+            YEAR
+            <InputNumber @bind-Value="newBook.PublicationYear" class="form-control" type="text" placeholder="Year"/>
+            NUMBER OF PAGES
+            <InputNumber @bind-Value="newBook.NumOfPages" class="form-control" type="text" placeholder="Number of pages"/>
+        </div>
+
+        <p class="actions">
+            <button class="btn btn-success" type="submit">
+                Add adult
+            </button>
+        </p>
+    }
+</EditForm>
+</div>
+@code {
+    private List<Author> _authors;
+    private Book newBook = new Book();
+    private int AuthorId = 0;
+    HttpClient _client;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _client = new HttpClient();
+        _authors =  await GetAuthors();
+    }
+
+    public async Task<bool> AddBook()
+    {
+        
+        return false;
+    }
+
+    public async Task<List<Author>> GetAuthors()
+    {
+       
+        HttpResponseMessage responseMessage = await _client.GetAsync("https://localhost:5001/Author");
+
+        if (!responseMessage.IsSuccessStatusCode)
+            throw new Exception(@"Error: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase}");
+
+        string result = await responseMessage.Content.ReadAsStringAsync();
+        _authors = JsonSerializer.Deserialize<List<Author>>(result, new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+
+        return _authors;
+    }
+
+}

@@ -27,18 +27,17 @@
         }
         else
         {
-            using HttpClient client = new HttpClient();
             Author author = new Author();
             author.FirstName = FirstName;
             author.LastName = LastName;
-            
 
-                string authorAsJson = JsonSerializer.Serialize(author);
-                HttpContent content = new StringContent(authorAsJson, Encoding.UTF8, "application/json");
-                
+            using HttpClient client = new HttpClient();
+            string authorAsJson = JsonSerializer.Serialize(author);
+            HttpContent content = new StringContent(authorAsJson, Encoding.UTF8, "application/json");
+
             HttpResponseMessage responseMessage = await client.PostAsync(
-                $"{uri}/Author" , content);
-            
+                $"{uri}/Author", content);
+
             if (!responseMessage.IsSuccessStatusCode)
             {
                 throw new Exception("Kunne ikke tilføje forfatter");

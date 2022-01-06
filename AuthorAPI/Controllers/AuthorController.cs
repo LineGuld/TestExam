@@ -38,7 +38,7 @@ namespace Author_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Author>> AddAuthor([FromBody] Author author)
+        public async Task<ActionResult> AddAuthor([FromBody] Author author)
         {
             if (!ModelState.IsValid)
             {
@@ -47,9 +47,9 @@ namespace Author_API.Controllers
 
             try
             {
-                EntityEntry<Author> added = await AuthorDbContext.AddAsync(author);
+               await AuthorDbContext.AddAsync(author);
                 await AuthorDbContext.SaveChangesAsync();
-                return Created($"/{added.Entity.Id}", added);
+                return Ok();
             }
             catch (Exception e)
             {

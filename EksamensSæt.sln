@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthorAPI", "AuthorAPI\Auth
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthorBlazor", "AuthorBlazor\AuthorBlazor.csproj", "{A5F54A82-2C40-4261-9670-B57B5BAC9EAE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{66EFB493-7962-4B6D-892C-CE9237D165CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{A5F54A82-2C40-4261-9670-B57B5BAC9EAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5F54A82-2C40-4261-9670-B57B5BAC9EAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5F54A82-2C40-4261-9670-B57B5BAC9EAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66EFB493-7962-4B6D-892C-CE9237D165CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66EFB493-7962-4B6D-892C-CE9237D165CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66EFB493-7962-4B6D-892C-CE9237D165CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66EFB493-7962-4B6D-892C-CE9237D165CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
