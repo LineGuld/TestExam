@@ -51,7 +51,7 @@ namespace Author_API.Controllers
                     Include(a => a.Books).
                     FirstAsync(author1 => author1.Id == authorId );
                 author.Books.Add(book);
-                AuthorDbContext.Books.Add(book);
+                await AuthorDbContext.Books.AddAsync(book);
                 await AuthorDbContext.SaveChangesAsync();
 
                 return Created($"/{author.Id}", book);

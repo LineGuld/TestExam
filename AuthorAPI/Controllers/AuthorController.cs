@@ -47,7 +47,7 @@ namespace Author_API.Controllers
 
             try
             {
-               await AuthorDbContext.AddAsync(author);
+               await AuthorDbContext.Authors.AddAsync(author);
                 await AuthorDbContext.SaveChangesAsync();
                 return Ok();
             }
